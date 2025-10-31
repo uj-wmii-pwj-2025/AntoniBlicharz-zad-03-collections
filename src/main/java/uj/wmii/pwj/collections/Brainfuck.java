@@ -17,6 +17,9 @@ public interface Brainfuck {
      * @throws IllegalArgumentException if program is null or empty
      */
     static Brainfuck createInstance(String program) {
+        if (program == null)
+            throw new IllegalArgumentException("Program cannot be null");
+
         return createInstance(program, System.out, System.in, 1024);
     }
 
@@ -30,7 +33,13 @@ public interface Brainfuck {
      * @throws IllegalArgumentException if: program is null or empty, OR out is null, OR in is null, OR stackSize is below 1.
      */
     static Brainfuck createInstance(String program, PrintStream out, InputStream in, int stackSize) {
-        return null;
+        if (stackSize <= 0)
+            throw new IllegalArgumentException("Stack size must be greater than 0");
+        if (in == null)
+            throw new IllegalArgumentException("Input cannot be null");
+        if (out == null)
+            throw new IllegalArgumentException("Output cannot be null");
+        return BrainfuckInterpreter.createInstance(program, out, in, stackSize);
     }
 
 }
